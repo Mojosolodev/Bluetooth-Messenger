@@ -1,13 +1,20 @@
 package com.plcoding.bluetoothchat.presentation.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,15 +45,43 @@ fun DeviceScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Button(onClick = onStartScan) {
-                Text(text = "Start scan")
+            Button(
+                onClick = onStartScan,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50.dp))
+            ) {
+                Text(text = "Scanner",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold
+                    )
+                )
             }
-            Button(onClick = onStopScan) {
-                Text(text = "Stop scan")
+
+            Button(
+                onClick = onStopScan,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50.dp))
+            ) {
+                Text(text = "Arreter Scan",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold
+                    )
+                )
             }
-            Button(onClick = onStartServer) {
-                Text(text = "Start server")
+
+            Button(
+                onClick = onStartServer,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(50.dp))
+            ) {
+                Text(
+                    text = "Servir D'hote",
+                    style = TextStyle(
+                        fontWeight = FontWeight.Bold
+                    )
+                )
             }
+
         }
     }
 }
@@ -62,39 +97,90 @@ fun BluetoothDeviceList(
         modifier = modifier
     ) {
         item {
-            Text(
-                text = "Paired Devices",
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-        items(pairedDevices) { device ->
-            Text(
-                text = device.name ?: "(No name)",
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onClick(device) }
                     .padding(16.dp)
-            )
+                    .background(color = Color(0xFFADD8E6)),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Paired Devices",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+            }
+
+        }
+        items(pairedDevices) { device ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(width = 1.dp, color = Color.Black)
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = device.name ?: "Unidentified Device",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onClick(device) },
+                        style = TextStyle(
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    )
+                    Text(
+                        text = "-------->"+device.address ?: "-------",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
+            }
         }
 
         item {
-            Text(
-                text = "Scanned Devices",
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-        items(scannedDevices) { device ->
-            Text(
-                text = device.name ?: "(No name)",
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onClick(device) }
                     .padding(16.dp)
-            )
+                    .background(color = Color(0xFFADD8E6)),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Scanned Devices",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+            }
+        }
+        items(scannedDevices) { device ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(width = 1.dp, color = Color.Black)
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = device.name ?: "Unidentified Device",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onClick(device) },
+                        style = TextStyle(
+                            fontWeight = FontWeight.ExtraBold
+                        )
+                    )
+                    Text(
+                        text = "-------->"+device.address ?: "-------",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                }
+            }
         }
     }
 }

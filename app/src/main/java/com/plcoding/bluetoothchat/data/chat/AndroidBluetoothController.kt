@@ -84,9 +84,9 @@ class AndroidBluetoothController(
     }
 
     override fun startDiscovery() {
-        if(!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
+       /* if(!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
             return
-        }
+        }*/
 
         context.registerReceiver(
             foundDeviceReceiver,
@@ -99,18 +99,18 @@ class AndroidBluetoothController(
     }
 
     override fun stopDiscovery() {
-        if(!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
+        /*if(!hasPermission(Manifest.permission.BLUETOOTH_SCAN)) {
             return
-        }
+        }*/
 
         bluetoothAdapter?.cancelDiscovery()
     }
 
     override fun startBluetoothServer(): Flow<ConnectionResult> {
         return flow {
-            if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+            /*if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
                 throw SecurityException("No BLUETOOTH_CONNECT permission")
-            }
+            }*/
 
             currentServerSocket = bluetoothAdapter?.listenUsingRfcommWithServiceRecord(
                 "chat_service",
@@ -147,9 +147,9 @@ class AndroidBluetoothController(
 
     override fun connectToDevice(device: BluetoothDeviceDomain): Flow<ConnectionResult> {
         return flow {
-            if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+            /*if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
                 throw SecurityException("No BLUETOOTH_CONNECT permission")
-            }
+            }*/
 
             currentClientSocket = bluetoothAdapter
                 ?.getRemoteDevice(device.address)
@@ -182,9 +182,9 @@ class AndroidBluetoothController(
     }
 
     override suspend fun trySendMessage(message: String): BluetoothMessage? {
-        if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+        /*if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
             return null
-        }
+        }*/
 
         if(dataTransferService == null) {
             return null
@@ -215,9 +215,9 @@ class AndroidBluetoothController(
     }
 
     private fun updatePairedDevices() {
-        if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
+        /*if(!hasPermission(Manifest.permission.BLUETOOTH_CONNECT)) {
             return
-        }
+        }*/
         bluetoothAdapter
             ?.bondedDevices
             ?.map { it.toBluetoothDeviceDomain() }

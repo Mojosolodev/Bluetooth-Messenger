@@ -65,14 +65,15 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            permissionLauncher.launch(
-                arrayOf(
-                    Manifest.permission.BLUETOOTH_SCAN,
-                    Manifest.permission.BLUETOOTH_CONNECT,
-                )
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.BLUETOOTH_SCAN,
+                Manifest.permission.BLUETOOTH_CONNECT,
             )
-        }
+        )
+        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            permission launcher was here
+        }*/
 
         setContent {
             BluetoothChatTheme {
